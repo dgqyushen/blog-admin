@@ -1,19 +1,6 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <!--      <div class="login-title">管理员登录</div>-->
-      <!--      <el-form :label-position="left">-->
-      <!--        <el-form-item label="用户名">-->
-      <!--          <el-input v-model="loginForm.username" ></el-input>-->
-      <!--        </el-form-item>-->
-      <!--        <el-form-item label="密码">-->
-      <!--          <el-input type="password" v-model="loginForm.password"></el-input>-->
-      <!--        </el-form-item>-->
-      <!--        <el-form-item>-->
-      <!--          <el-button type="primary" @click="submit">提交</el-button>-->
-      <!--&lt;!&ndash;          <el-button @click="resetForm('ruleForm')">重置</el-button>&ndash;&gt;-->
-      <!--        </el-form-item>-->
-      <!--      </el-form>-->
       <v-card>
         <v-card-title>
           <span class="headline">后台博客管理登录</span>
@@ -34,6 +21,7 @@
                     type="password"
                     required
                     v-model="loginForm.password"
+                    @keydown.enter="login"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -66,8 +54,19 @@ export default {
   },
   methods: {
     login(){
-      this.$axios.get("http://localhost:8081/ping").then(({data})=>{
-        console.log(data);
+      let viewUser = this.loginForm;
+      console.log(viewUser)
+      this.$axios.post("/api/user/login",viewUser).then(({data})=>{
+        if (data.code===200){
+          this.$message({
+            message: '登录成功',
+            type: 'success'
+          });
+          this.$router.push("/home")
+
+        }else {
+          this.$message.error('登录失败');
+        }
       })
     }
   }
@@ -81,7 +80,7 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
-  background: url(https://www.static.talkxj.com/0w3pdr.jpg) center center /
+  background: url(http://tvax2.sinaimg.cn/large/005IuFOngy1gpqhh5lttpj32yo1o0tzv.jpg) center center /
     cover no-repeat;
 
 }

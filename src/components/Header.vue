@@ -1,27 +1,16 @@
 <template>
   <div>
-    <el-container style="height: 1010px">
-<!--      <Header></Header>-->
-<!--      <el-header>Header</el-header>-->
-      <el-container>
-<!--        <el-aside width="200px">Aside</el-aside>-->
-        <Side></Side>
-        <el-main>Main</el-main>
-      </el-container>
+    <el-container>
+      <el-header>
+        Head
+      </el-header>
     </el-container>
-
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header";
-import Side from "@/components/Side";
 export default {
-  name: "Home",
-  components: {
-    Header,
-    Side
-  }
+  name: "Header"
 }
 </script>
 
@@ -48,7 +37,7 @@ export default {
 }
 
 body > .el-container {
-  /*margin-bottom: 40px;*/
+  margin-bottom: 40px;
 }
 
 .el-container:nth-child(5) .el-aside,
@@ -59,5 +48,4 @@ body > .el-container {
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
 }
-
 </style>
