@@ -1,35 +1,42 @@
 <template>
   <div>
     <v-card height="100%" width="220" class="mx-auto">
-      <v-navigation-drawer permanent>
+      <v-navigation-drawer permanent color="#304156" right>
         <!--结构为v-list-group=>template=>v-list-item-->
         <v-list dense nav>
 
           <v-list-item>
-            <v-list-item-icon style="margin-right: 10%">
-              <v-icon>mdi-home</v-icon>
+            <v-list-item-icon style="margin-right: 17%">
+              <v-icon color="#fff">mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>首页</v-list-item-title>
+              <router-link :to="'/home'+'/'+'test111111'">
+                <v-list-item-title style="color: white">首页</v-list-item-title>
+              </router-link>
+
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-group :value="true" :prepend-icon="item.action"  v-for="item in items" :key="item.title" v-model="item.active">
+
+
+
+          <v-list-group :value="false" v-for="item in items" :key="item.title" v-model="item.active" style="color: white">
             <template v-slot:activator>
-              <v-list-item-title style="margin-left: 10%">{{item.title}}</v-list-item-title>
+              <v-list-item-icon><v-icon style="color: white">{{item.action}}</v-icon></v-list-item-icon>
+              <v-list-item-title style="color: white">{{item.title}}</v-list-item-title>
             </template>
-            <v-list-item v-for="child in item.items" :key="child.title">
-              <v-list-item-icon style="margin-right: 5%"><v-icon style="font-size: medium">{{child.icon}}</v-icon></v-list-item-icon>
-              <v-list-item-content style="font-size: small">{{child.title}}</v-list-item-content>
+            <v-list-item v-for="child in item.items" :key="child.title" @click="test">
+              <v-list-item-icon style="margin-right: 5%"><v-icon style="font-size: medium; color: #7D837F">{{child.icon}}</v-icon></v-list-item-icon>
+              <v-list-item-content style="font-size: small; color: #7D837F">{{child.title}}</v-list-item-content>
             </v-list-item>
           </v-list-group>
 
-          <v-list-item>
-            <v-list-item-icon style="margin-right: 10%">
-              <v-icon>mdi-account</v-icon>
+          <v-list-item @click="test">
+            <v-list-item-icon style="margin-right: 17%">
+              <v-icon color="#fff">mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>个人中心</v-list-item-title>
+              <v-list-item-title style="color: #fff">个人中心</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -45,6 +52,10 @@ export default {
   data() {
     return {
       items: [
+        // {
+        //   title: '首页',
+        //   action: 'mdi-home'
+        // },
         {
           title: '文章管理',
           action: 'mdi-file',
@@ -135,14 +146,17 @@ export default {
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    showTabs() {
-      this.show = true;
+    // handleOpen(key, keyPath) {
+    //   console.log(key, keyPath);
+    // },
+    // handleClose(key, keyPath) {
+    //   console.log(key, keyPath);
+    // },
+    // showTabs() {
+    //   this.show = true;
+    // },
+    test() {
+      alert("test");
     }
   }
 }

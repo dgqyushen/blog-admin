@@ -1,51 +1,89 @@
 <template>
   <div>
-    <el-container>
-      <el-header>
-        Head
-      </el-header>
-    </el-container>
+    <el-row>
+      <!--      套element的壳，用vuetify组件-->
+      <v-row>
+        <v-col>
+          <div>
+            <v-icon>mdi-backburger</v-icon>
+            {{ title }}
+            <!--       会变得-->
+          </div>
+        </v-col>
+
+
+        <!--        <div>-->
+        <!--          <v-avatar style="margin-top: 10px">-->
+        <!--            <img src="https://www.static.talkxj.com/avatar/user.png" alt="" sizes="10">-->
+        <!--          </v-avatar>-->
+        <!--        </div>-->
+        <el-dropdown>
+          <el-avatar :size="30" :src="avatar"/>
+          <i class="el-icon-caret-bottom"/>
+          <el-dropdown-menu slot="dropdown">
+            <!--            <el-dropdown-item command="setting">-->
+            <el-dropdown-item >
+              <i class="el-icon-s-custom"/>个人中心
+            </el-dropdown-item>
+            <!--            <el-dropdown-item command="logout" divided>-->
+            <el-dropdown-item>
+              <i class="iconfont el-icon-mytuichu"/>退出登录
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </v-row>
+    </el-row>
+    <hr style="">
+
+    <el-row>
+
+<!--      <template>-->
+<!--        <v-tabs>-->
+<!--          <v-tab v-for="item in menuList" active-class=".active">-->
+<!--            <div>{{item}}</div>-->
+<!--          </v-tab>-->
+<!--        </v-tabs>-->
+<!--      </template>-->
+      <el-tag  v-for="(item,index) in menuList" closable effect="plain" @close="close(index)" :key="index">
+        {{item}}
+
+      </el-tag>
+
+      <hr>
+
+
+    </el-row>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
-  name: "Header"
+  name: "Header",
+  data() {
+    return {
+      title: '首页',
+      avatar: 'https://www.static.talkxj.com/avatar/user.png',
+    }
+  },
+  computed: {
+    ...mapState(["menuList"])
+  },
+  methods: {
+    ...mapMutations(['menuListItemDel']),
+    close(index){
+      this.menuListItemDel(index);
+      // alert(index);
+
+    }
+  }
+
 }
 </script>
 
 <style scoped>
-.el-header, .el-footer {
-  background-color: #B3C0D1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-}
-
-.el-aside {
-  background-color: #D3DCE6;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
-}
-
-.el-main {
-  background-color: #E9EEF3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
-
-body > .el-container {
-  margin-bottom: 40px;
-}
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
+.active{
+ background-color: red;
 }
 </style>
