@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    "menuList": ['首页','添加文章']
+    "menuList": ['首页']
   },
   mutations: {
     menuListItemAdd(state,menuItem){

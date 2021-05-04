@@ -25,13 +25,13 @@
               <v-list-item-icon><v-icon style="color: white">{{item.action}}</v-icon></v-list-item-icon>
               <v-list-item-title style="color: white">{{item.title}}</v-list-item-title>
             </template>
-            <v-list-item v-for="child in item.items" :key="child.title" @click="test">
+            <v-list-item v-for="child in item.items" :key="child.title" @click="add(child.title)">
               <v-list-item-icon style="margin-right: 5%"><v-icon style="font-size: medium; color: #7D837F">{{child.icon}}</v-icon></v-list-item-icon>
               <v-list-item-content style="font-size: small; color: #7D837F">{{child.title}}</v-list-item-content>
             </v-list-item>
           </v-list-group>
 
-          <v-list-item @click="test">
+          <v-list-item>
             <v-list-item-icon style="margin-right: 17%">
               <v-icon color="#fff">mdi-account</v-icon>
             </v-list-item-icon>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: "Side",
   data() {
@@ -146,18 +147,11 @@ export default {
     }
   },
   methods: {
-    // handleOpen(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
-    // handleClose(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
-    // showTabs() {
-    //   this.show = true;
-    // },
-    test() {
-      alert("test");
+    ...mapMutations(['menuListItemAdd']),
+    add(member){
+      this.menuListItemAdd(member);
     }
+
   }
 }
 </script>
