@@ -84,14 +84,32 @@
         </el-col>
       </el-row>
     </div>
+
     <el-card style="margin-top:1.25rem">
       <div style="font-size: 13px;color: #202a34;font-weight: 700;">一周访问量</div>
       <div style="height: 350px">
-        <v-chart>
-
-        </v-chart>
+        <ve-line :data="visData" :colors="colors"></ve-line>
       </div>
     </el-card>
+
+    <el-row :gutter="30" style="margin-top:1.25rem">
+      <el-col :span="16">
+        <el-card>
+          <div class="e-title">文章浏览量排行</div>
+          <div style="height:350px">
+            <ve-histogram :data="blogData" :colors="colors"></ve-histogram>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card>
+          <div class="e-title">文章分类统计</div>
+          <div style="height:350px">
+            <ve-pie :data="categoriesData"></ve-pie>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
 
   </div>
 </template>
@@ -100,11 +118,43 @@
 export default {
   name: "Index",
   data() {
+    this.colors = ['#60C0FF']
     return {
       visNum:'',
       accountNum:'',
       articleNum:'',
-      commentNum:''
+      commentNum:'',
+      visData: {
+        columns: ['日期', '访问量'],
+        rows: [
+          // { '日期': '2018-05-22', '访问量': 32371 },
+        ]
+      },
+      blogData: {
+        columns: ['文章', '阅读量'],
+        rows: [
+          // {'文章':'test1','阅读量':'11111'}
+        ]
+      },
+      categoriesData: {
+        columns: ['分类', '数目'],
+        rows: [
+          // {'分类':'测试算法','数目':1},
+          // {'分类':'测试1','数目':1}
+        ]
+      }
+      // chartSettings: {
+      //   // xAxis: {
+      //   //   data: [],
+      //   //   axisLine: {
+      //   //     lineStyle: {
+      //   //       // 设置x轴颜色
+      //   //       color: "#60C0FF"
+      //   //     }
+      //   //   }
+      //   // }
+      //
+      // }
     }
   },
   methods: {
@@ -123,7 +173,35 @@ export default {
     });
     this.$axios.get("/api/comment/getNum").then(({data})=>{
       this.commentNum = data.data;
+    });
+    this.$axios.get("/api/visitor/getVisitData").then(({data})=>{
+      // console.log(data.data);
+      for (let item of data.data){
+        this.visData.rows.push({
+          "日期": item.date,
+          "访问量": item.visitNum
+        })
+      }
+    });
+    this.$axios.get("/api/blog/getBlogData").then(({data})=>{
+      for (let item of data.data){
+        this.blogData.rows.push({
+          '文章': item.blogTitle,
+          '阅读量': item.blogVisitNum
+        })
+      }
+    });
+    this.$axios.get("/api/categories/getCategoriesData").then(({data})=>{
+      for (let item of data.data){
+        this.categoriesData.rows.push(
+            {
+              '分类': item.name,
+              '数目': item.num
+            }
+        )
+      }
     })
+
   }
 
 }

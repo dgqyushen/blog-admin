@@ -44,12 +44,16 @@
 <!--          </v-tab>-->
 <!--        </v-tabs>-->
 <!--      </template>-->
-      <el-tag  v-for="(item,index) in menuList" closable effect="plain" @close="close(index)" :key="index">
-        {{item}}
+      <div>
+        <el-tag  v-for="(item,index) in menuList" closable effect="plain" @close="close(index)" :key="index" style="margin-right: 7px" @click.middle="close(index)">
+          <router-link :to="item.link">
+            {{item.name}}
+          </router-link>
+        </el-tag>
+      </div>
 
-      </el-tag>
 
-      <hr>
+      <hr style="margin-top: 5px">
 
 
     </el-row>
@@ -86,4 +90,13 @@ export default {
 .active{
  background-color: red;
 }
+
+.router-link-active {
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
 </style>

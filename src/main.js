@@ -7,19 +7,16 @@ import vuetify from './plugins/vuetify';
 import axios from "axios";
 import "./assets/css/index.css";
 import "./assets/css/iconfont.css";
-import ECharts from "vue-echarts";
-import "echarts/lib/chart/line";
-import "echarts/lib/chart/pie";
-import "echarts/lib/chart/bar";
-import "echarts/lib/component/tooltip";
-import "echarts/lib/component/legend";
-import "echarts/lib/component/title";
-// import VCharts from 'v-charts-v2'
+import VCharts from 'v-charts';
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
-// Vue.use(VCharts)
+Vue.use(mavonEditor)
+Vue.use(VCharts)
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
-Vue.component("v-chart", ECharts);
+
+
 
 new Vue({
   router,

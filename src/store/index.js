@@ -4,19 +4,32 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    "menuList": ['首页']
-  },
-  mutations: {
-    menuListItemAdd(state,menuItem){
-      state.menuList.push(menuItem);
+    state: {
+        "menuList": [
+            {
+              name:'首页',
+              link:'/'
+            }
+        ]
     },
-    menuListItemDel(state,id){
-      state.menuList.splice(id,1);
-    }
-  },
-  actions: {
-  },
-  modules: {
-  }
+    mutations: {
+        menuListItemAdd(state, menuItem) {
+            // if (state.menuList.length>8){
+            //
+            // }
+            state.menuList.push(menuItem);
+        },
+        menuListItemDel(state, id) {
+            if (state.menuList.length == 1) {
+                return;
+            }
+            state.menuList.splice(id, 1);
+        },
+        // menuListGetLastOne(state){
+        //     let length = state.menuList.length;
+        //     return state.menuList[length];
+        // }
+    },
+    actions: {},
+    modules: {}
 })

@@ -3,30 +3,81 @@ import VueRouter from 'vue-router'
 import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Index from "@/views/Index"
+import Test from "@/views/Test";
 
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: Login
   },
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: Home,
     children: [
-      {
-        path: ':name',
-        name: 'Index',
-        component: Index
-      },
+      // {
+      //   path: ':name',
+      //   name: 'Index',
+      //   component: Index
+      // },
       {
         path: '',
         name: 'Index',
         component: Index
+      },
+      {
+        path: 'article/add',
+        name: 'AddArticle',
+        component: ()=>import("@/views/Article/AddArticle")
+      },
+      {
+        path: 'manage/article',
+        name: 'Test',
+        component: ()=>import("@/views/Article/ArticleList")
+      },
+      {
+        path: 'manage/tags',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'manage/categories',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'manage/comment',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'manage/message',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'user/list',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'user/role',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'user/online',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'manage/menu',
+        name: 'Test',
+        component: Test
       }
     ]
   },
