@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div style="font-size: medium; margin-bottom: 5px">
-        <strong>添加文章</strong>
+        <strong>编辑文章{{this.$route.params.id}}</strong>
       </div>
 
       <el-row :gutter="20" style="margin-bottom: 2%">
@@ -11,7 +11,7 @@
         </el-col>
         <el-col :span="4" :offset="1">
           <!--          <el-button type="info" plain @click="send">保存草稿</el-button>-->
-          <el-button type="primary" @click="dialogVisible = true">发布文章</el-button>
+          <el-button type="primary" @click="dialogVisible = true">修改文章</el-button>
         </el-col>
       </el-row>
 
@@ -23,7 +23,7 @@
     <el-dialog title="上传文章" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
       <el-form>
         <el-form-item label="文章分类">
-          <el-select v-model="category" placeholder="请选择分类">
+          <el-select v-model="category" placeholder="请选择分类" allow-create filterable>
             <el-option v-for="(item,index) in categoryList" :key="index" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -46,7 +46,7 @@
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-<!--            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
+            <!--            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
           </el-upload>
 
 
@@ -57,10 +57,10 @@
         </el-form-item>
       </el-form>
 
-<!--      <span slot="footer" class="dialog-footer">-->
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="send">发表</el-button>
-<!--  </span>-->
+      <!--      <span slot="footer" class="dialog-footer">-->
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="send">发表</el-button>
+      <!--  </span>-->
     </el-dialog>
     <!--    <mavon-editor></mavon-editor>-->
   </div>
@@ -69,14 +69,14 @@
 
 <script>
 export default {
-  name: "AddArticle",
+  name: "EditArticle",
   data() {
     return {
       blog: {
-        id:'',
+        id: this.$route.params.id,
         title: '',
         content: '',
-        author: 'dgqyushen',
+        author: '',
         image: '',
         isTop: false
       },
@@ -90,11 +90,20 @@ export default {
   methods: {
     send() {
       let viewBlogs = this.blog
-      this.$axios.post("/api/blog/addBlog", viewBlogs).then(({data}) => {
+      let category = {
+        id: null,
+        blogId: this.$route.params.id,
+        name: this.category
+      }
+      this.$axios.post("/api/blog/updateBlog", viewBlogs).then(({data}) => {
         console.log(data);
       });
+      console.log(category)
+      this.$axios.post("/api/categories/insertCategory",category).then(({data}) => {
+        console.log(data);
+      })
       this.dialogVisible = false;
-      this.$message.success("发表文章成功");
+      this.$message.success("修改文章成功");
     },
     handleClose(done) {
       this.$confirm('确认关闭？')
@@ -116,16 +125,24 @@ export default {
     }
   },
   beforeMount() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let today = year.toString() + '-' + month.toString() + '-' + day.toString();
-    // console.log(today);
-    this.blog.title = today;
     this.$axios.get("/api/categories/getAll").then(({data})=>{
-      // console.log(data.data.categoriesName);
+
       this.categoryList = data.data.categoriesName;
+    })
+    let that = this;
+    console.log(this.$route.params.id);
+
+    this.$axios.get('/api/blog/getOneById',{
+      params: {
+        id: that.$route.params.id
+      }
+    }).then(({data})=>{
+      console.log(data.data.blog);
+      this.blog.title = data.data.blog.blogTitle;
+      this.blog.content = data.data.blog.blogContent;
+      // console.log(this.blog.title);
+      // console.log(this.blog.content);
+
     })
   }
 }

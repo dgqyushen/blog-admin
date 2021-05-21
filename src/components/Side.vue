@@ -6,7 +6,7 @@
         <v-list dense nav>
 
           <v-list-item>
-            <v-list-item-icon style="margin-right: 17%">
+            <v-list-item-icon style="margin-right: 14%">
               <v-icon color="#fff">mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
@@ -17,9 +17,6 @@
 
             </v-list-item-content>
           </v-list-item>
-
-
-
 
           <v-list-group :value="false" v-for="item in items" :key="item.title" v-model="item.active" style="color: white">
             <template v-slot:activator>
@@ -39,22 +36,26 @@
           </v-list-group>
 
           <v-list-item>
-            <v-list-item-icon style="margin-right: 17%">
+            <v-list-item-icon style="margin-right: 14%">
               <v-icon color="#fff">mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title style="color: #fff">个人中心</v-list-item-title>
+              <router-link to="/about">
+                <v-list-item-title style="color: #fff">个人中心</v-list-item-title>
+              </router-link>
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item @click="console">
-            <v-list-item-icon style="margin-right: 17%">
-              <v-icon color="#fff">mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title style="color: #fff">Test</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+
+
+<!--          <v-list-item @click="console">-->
+<!--            <v-list-item-icon style="margin-right: 17%">-->
+<!--              <v-icon color="#fff">mdi-account</v-icon>-->
+<!--            </v-list-item-icon>-->
+<!--            <v-list-item-content>-->
+<!--              <v-list-item-title style="color: #fff">Test</v-list-item-title>-->
+<!--            </v-list-item-content>-->
+<!--          </v-list-item>-->
 
         </v-list>
       </v-navigation-drawer>
@@ -186,7 +187,7 @@ export default {
           return;
         }
       }
-      if (this.menuList.length>8){
+      if (this.menuList.length>10){
         this.$message.warning("不能容纳再多的标签页了");
         return;
       }
@@ -206,5 +207,15 @@ export default {
 </script>
 
 <style scoped>
+.active{
+  background-color: red;
+}
 
+.router-link-active {
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
 </style>

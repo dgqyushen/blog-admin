@@ -35,6 +35,11 @@ const routes = [
         component: ()=>import("@/views/Article/AddArticle")
       },
       {
+        path: 'article/edit/:id',
+        name: 'EditArticle',
+        component: ()=>import("@/views/Article/EditArticle")
+      },
+      {
         path: 'manage/article',
         name: 'Test',
         component: ()=>import("@/views/Article/ArticleList")
@@ -78,7 +83,28 @@ const routes = [
         path: 'manage/menu',
         name: 'Test',
         component: Test
+      },
+      {
+        path: 'manage/resource',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'manage/link',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'about',
+        name: 'Test',
+        component: Test
+      },
+      {
+        path: 'manage/log',
+        name: 'Test',
+        component: Test
       }
+
     ]
   },
   // {
