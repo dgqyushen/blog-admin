@@ -10,9 +10,11 @@ import "./assets/css/iconfont.css";
 import VCharts from 'v-charts';
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import qs from 'qs'
 
 Vue.use(mavonEditor)
 Vue.use(VCharts)
+Vue.use(qs)
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 

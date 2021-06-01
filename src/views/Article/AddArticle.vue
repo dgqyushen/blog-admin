@@ -123,9 +123,9 @@ export default {
     let today = year.toString() + '-' + month.toString() + '-' + day.toString();
     // console.log(today);
     this.blog.title = today;
-    this.$axios.get("/api/categories/getAll").then(({data})=>{
+    this.$axios.get("/api/categories/getCategoriesList").then(({data})=>{
       // console.log(data.data.categoriesName);
-      this.categoryList = data.data.categoriesName;
+      this.categoryList = data.data;
     })
   }
 }

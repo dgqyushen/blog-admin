@@ -183,7 +183,12 @@ export default {
     add(member){
       for (let item of this.menuList){
         if (item.name===member.name){
-          this.$message.warning("不能存在重复的标签");
+          // console.log(member);
+          // this.$message.warning("不能存在重复的标签");
+          if (this.$route.path!== member.link){
+            this.$router.push(member.link);
+          }
+
           return;
         }
       }

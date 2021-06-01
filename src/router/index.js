@@ -52,7 +52,7 @@ const routes = [
       {
         path: 'manage/categories',
         name: 'Test',
-        component: Test
+        component: ()=>import("@/views/Article/Category")
       },
       {
         path: 'manage/comment',

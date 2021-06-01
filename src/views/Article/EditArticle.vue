@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div style="font-size: medium; margin-bottom: 5px">
-        <strong>编辑文章{{this.$route.params.id}}</strong>
+        <strong>编辑文章</strong>
       </div>
 
       <el-row :gutter="20" style="margin-bottom: 2%">
@@ -125,9 +125,9 @@ export default {
     }
   },
   beforeMount() {
-    this.$axios.get("/api/categories/getAll").then(({data})=>{
+    this.$axios.get("/api/categories/getCategoriesList").then(({data})=>{
 
-      this.categoryList = data.data.categoriesName;
+      this.categoryList = data.data;
     })
     let that = this;
     console.log(this.$route.params.id);
