@@ -57,7 +57,7 @@ const routes = [
       {
         path: 'manage/comment',
         name: 'Test',
-        component: Test
+        component: ()=>import("@/views/Message/CommentList")
       },
       {
         path: 'manage/message',

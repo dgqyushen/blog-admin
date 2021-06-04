@@ -148,7 +148,7 @@ export default {
       originTableData: [],
       selectedList: [],
       dialogVisible: false,
-      blogIdList:[]
+      blogIdList: []
 
     }
   },
@@ -184,22 +184,24 @@ export default {
     handleSelectionChange(val) {
       this.selectedList = val;
     },
-    openDialog(){
+    openDialog() {
       this.dialogVisible = true;
     },
     deleteItems() {
-      if (this.selectedList.length === 0){
+      if (this.selectedList.length === 0) {
         this.blogIdList = [];
         // console.log(this.blogIdList);
-      }else {
+      } else {
         this.selectedList.forEach(e => {
           // console.log(e.blogId);
           this.blogIdList.push(e.blogId);
         })
         // console.log(this.blogIdList);
       }
+      // this.blogIdList = [];
+
       let blogIdList = this.blogIdList;
-      this.$axios.post('/api/blog/deleteBlogs',blogIdList);
+      this.$axios.post('/api/blog/deleteBlogs', blogIdList);
       this.dialogVisible = false;
       window.location.reload();
 
@@ -209,7 +211,8 @@ export default {
           .then(_ => {
             done();
           })
-          .catch(_ => {});
+          .catch(_ => {
+          });
     }
 
   },

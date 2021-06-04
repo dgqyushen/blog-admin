@@ -7,7 +7,7 @@
       <el-row>
         <el-col :span="18">
           <el-button type="primary" size="small" icon="el-icon-plus" @click="dialogVisible = true">新增分类</el-button>
-          <el-button type="danger" size="small">批量删除</el-button>
+          <el-button type="danger" size="small" @click="categoryListVisible=true">批量删除</el-button>
         </el-col>
         <el-col :span="6">
           <el-input v-model="searchName" placeholder="请输入你想搜索的分类" size="small" style="width: 50%"></el-input>
@@ -19,6 +19,7 @@
           :data="categoryData"
           style="width: 100%;
             height: 500px"
+          @selection-change="handleSelectionChange"
       >
         <el-table-column
             type="selection"
@@ -85,6 +86,18 @@
     </span>
     </el-dialog>
 
+    <el-dialog
+        title="提示"
+        :visible.sync="categoryListVisible"
+        width="30%"
+        :before-close="handleClose">
+      <span>确认删除所选的标签吗？</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="categoryListVisible = false">取 消</el-button>
+    <el-button type="primary" @click="send">确 定</el-button>
+  </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -97,7 +110,10 @@ export default {
       categoryData: [],
       dialogVisible: false,
       editVisible: false,
+      categoryListVisible: false,
       searchName:'',
+      selectedList: [],
+      categoryList:[],
       categoryId:''
     }
   },
@@ -106,7 +122,6 @@ export default {
       let data = {
         name: this.categoryName
       }
-      // this.$axios.post('http://localhost:8081/categories/addCategory',data).then(({data}) => {
       this.$axios.post('/api/categories/addCategory',data);
       this.dialogVisible = false;
       window.location.reload();
@@ -137,16 +152,25 @@ export default {
       this.$axios.post('/api/categories/deleteCategory/'+item.toString()).then(({data}) => {
         window.location.reload();
       });
-      // let url = 'http://localhost:8081/categories/deleteCategory/'+item.toString();
-      // console.log(url);
-      // this.$axios.post(url).then(({data}) => {
-      //   window.location.reload();
-      // })
+    },
+    handleSelectionChange(val) {
+      this.categoryList = val;
+    },
+    send() {
+      this.selectedList = [];
+      this.categoryList.forEach(e =>{
+        this.selectedList.push(e.categoryId);
+      });
+      // console.log(this.selectedList);
+      let categoryList = this.selectedList;
+      // console.log(categoryList);
+      this.$axios.post("http://localhost:8081/categories/deleteCategories",categoryList).then(({data}) => {
+        console.log(data);
+      });
+      window.location.reload();
 
-      // this.$axios.post('/api/ping').then(({data}) => {
-      //   console.log(data);
-      // })
-    }
+      // console.log(this.selectedList);
+    },
   },
   beforeMount() {
     this.$axios.get('/api/categories/getCategoryInfo').then(({data}) => {
