@@ -67,7 +67,7 @@ const routes = [
       {
         path: 'user/list',
         name: 'Test',
-        component: Test
+        component: ()=>import("@/views/User/UserList")
       },
       {
         path: 'user/role',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card>
+    <el-card >
       <div style="font-size: medium; margin-bottom: 5px">
         <strong>评论列表</strong>
       </div>
@@ -74,10 +74,6 @@
             label="评论时间"
             width="400">
         </el-table-column>
-
-
-
-
 
         <el-table-column
             label="操作"
