@@ -5,33 +5,12 @@
         <strong>用户列表</strong>
       </div>
       <el-row>
-        <el-col :span="18">
-          <el-button type="danger" @click="openDialog">批量删除</el-button>
-        </el-col>
-        <el-col :span="3">
-          <el-select v-model="value" clearable placeholder="请选择">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="3">
-          <el-input
-              placeholder="请输入内容"
-              v-model=article>
-            <i slot="prefix" class="el-input__icon el-icon-search"></i>
-          </el-input>
-        </el-col>
       </el-row>
 
       <el-table
           :data="userList"
           style="width: 100%;
             height: 500px"
-          @selection-change="handleSelectionChange"
           border
       >
 
@@ -50,39 +29,40 @@
             width="180">
         </el-table-column>
 
-<!--        <el-table-column-->
-<!--            prop="blogTitle"-->
-<!--            label="登陆方式"-->
-<!--            width="180">-->
-<!--        </el-table-column>-->
+        <!--        <el-table-column-->
+        <!--            prop="blogTitle"-->
+        <!--            label="登陆方式"-->
+        <!--            width="180">-->
+        <!--        </el-table-column>-->
 
         <el-table-column
             prop="blogTitle"
             label="用户角色"
             width="180">
           <template slot-scope="scope">
-            <el-tag>{{scope.row.roleDescription}}</el-tag>
+            <el-tag>{{ scope.row.roleDescription }}</el-tag>
           </template>
         </el-table-column>
 
         <el-table-column
-            prop="blogTitle"
             label="禁用"
             width="180">
-
           <template slot-scope="scope">
-            <el-switch v-model="button"></el-switch>
+            <el-switch v-model="scope.row.userLocked"
+                       active-color="#ff4949"
+                       @change="setReverse(scope.row.userId)"
+            ></el-switch>
           </template>
         </el-table-column>
 
         <el-table-column
-            prop="blogTitle"
+            prop="userLoginIP"
             label="登录ip"
             width="180">
         </el-table-column>
 
         <el-table-column
-            prop="blogTitle"
+            prop="userLoginLocation"
             label="登录地址"
             width="180">
         </el-table-column>
@@ -102,11 +82,11 @@
         <el-table-column
             prop="blogTitle"
             label="操作"
-            width="78">
+            width="250">
           <template slot-scope="scope">
             <el-button
                 size="mini"
-                @click=""
+                @click="openDialog(scope.row)"
                 type="primary"
             >编辑
             </el-button>
@@ -115,25 +95,106 @@
 
       </el-table>
     </el-card>
+
+
+    <el-dialog
+        title="修改用户"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+      <span>
+        <el-form :model="form" ref="form" label-width="80px">
+        <el-form-item label="用户名">
+          <el-input v-model="form.userName" style="width: 80%"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="form.password" style="width: 80%"></el-input>
+        </el-form-item>
+        <el-form-item label="角色">
+<!--          <el-checkbox-group v-model="form.role" :min="1" :max="1">-->
+          <!--            <el-checkbox :label=item v-for="item in roleList" :key="item"></el-checkbox>-->
+          <!--          </el-checkbox-group>-->
+          <el-radio-group v-model="form.role">
+            <el-radio v-for="item in roleList" :label=item :key=item></el-radio>
+<!--            <el-radio :label="3">备选项</el-radio>-->
+<!--            <el-radio :label="6">备选项</el-radio>-->
+<!--            <el-radio :label="9">备选项</el-radio>-->
+      </el-radio-group>
+        </el-form-item>
+      </el-form>
+      </span>
+
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="send">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
   </div>
 </template>
 
 <script>
 export default {
   name: "UserList",
-  data(){
+  data() {
     return {
-      userList:[],
-      button: false,
+      userList: [],
+      dialogVisible: false,
+      form: {
+        userId:'',
+        userName: '',
+        password: '',
+        role: []
+      },
+      roleList: []
+      // button: false,
     }
   },
-  methods:{
-
+  methods: {
+    setReverse(item) {
+      let postData = {
+        id: item
+      }
+      // console.log(item);
+      this.$axios.post("/api/user/setUserLocked", postData).then(({data}) => {
+        // console.log(data);
+      })
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {
+          });
+    },
+    openDialog(item) {
+      this.form.role = [];
+      console.log(item);
+      // console.log(this.form.role);
+      this.dialogVisible = true;
+      this.form.userName = item.userUserName;
+      this.form.userId = item.userId;
+      // this.form.role.push(item.roleDescription);
+      this.form.role = item.roleDescription;
+    },
+    send() {
+      // console.log(this.form);
+      let postData = this.form
+      this.$axios.post('/api/user/setUserInfo', postData).then(({data}) => {
+        console.log(data);
+      })
+      this.dialogVisible = false;
+    }
   },
   beforeMount() {
-    this.$axios.get('http://localhost:8081/user/getUserRoleData').then(({data}) => {
-      this.userList =data.data;
-      console.log(this.userList);
+    this.$axios.get('/api/user/getUserRoleData').then(({data}) => {
+      this.userList = data.data;
+    });
+    this.$axios.get('/api/role/getAllRoleDescriptions').then(({data}) => {
+      this.roleList = data.data;
+      // console.log(this.roleList);
     })
   }
 }

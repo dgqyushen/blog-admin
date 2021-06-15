@@ -164,7 +164,7 @@ export default {
       // console.log(this.selectedList);
       let categoryList = this.selectedList;
       // console.log(categoryList);
-      this.$axios.post("http://localhost:8081/categories/deleteCategories",categoryList).then(({data}) => {
+      this.$axios.post("/api/categories/deleteCategories",categoryList).then(({data}) => {
         console.log(data);
       });
       window.location.reload();

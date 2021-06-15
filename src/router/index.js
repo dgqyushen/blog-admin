@@ -72,7 +72,7 @@ const routes = [
       {
         path: 'user/role',
         name: 'Test',
-        component: Test
+        component: ()=>import("@/views/User/RoleList")
       },
       {
         path: 'user/online',
@@ -96,11 +96,17 @@ const routes = [
       },
       {
         path: 'about',
-        name: 'Test',
-        component: Test
+        name: 'AboutMe',
+        component: ()=>import("@/views/System/AboutMe")
       },
       {
         path: 'manage/log',
+        name: 'Test',
+        component: Test
+      }
+      ,
+      {
+        path: 'info',
         name: 'Test',
         component: Test
       }

@@ -153,7 +153,7 @@ export default {
     }
   },
   beforeMount() {
-    this.$axios.get('http://localhost:8081/comment/getCommentsData').then(({data}) => {
+    this.$axios.get('/api/comment/getCommentsData').then(({data}) => {
       // console.log(data.data);
       this.commentData = data.data;
     })

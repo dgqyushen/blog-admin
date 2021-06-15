@@ -40,7 +40,7 @@
               <v-icon color="#fff">mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <router-link to="/about">
+              <router-link to="/info">
                 <v-list-item-title style="color: #fff">个人中心</v-list-item-title>
               </router-link>
             </v-list-item-content>
@@ -131,32 +131,32 @@ export default {
               icon: 'mdi-account-convert',
               link: '/user/role'
             },
-            {
-              title: '在线用户',
-              icon: 'mdi-account-clock',
-              link: '/user/online'
-            },
+            // {
+            //   title: '在线用户',
+            //   icon: 'mdi-account-clock',
+            //   link: '/user/online'
+            // },
           ]
         },
         {
           title: '系统管理',
           action: 'mdi-cog',
           items: [
-            {
-              title: '菜单管理',
-              icon: 'mdi-dots-horizontal-circle',
-              link: '/manage/menu'
-            },
-            {
-              title: '资源管理',
-              icon: 'mdi-earth',
-              link: '/manage/resource'
-            },
-            {
-              title: '友链管理',
-              icon: 'mdi-link-variant',
-              link: '/manage/link'
-            },
+            // {
+            //   title: '菜单管理',
+            //   icon: 'mdi-dots-horizontal-circle',
+            //   link: '/manage/menu'
+            // },
+            // {
+            //   title: '资源管理',
+            //   icon: 'mdi-earth',
+            //   link: '/manage/resource'
+            // },
+            // {
+            //   title: '友链管理',
+            //   icon: 'mdi-link-variant',
+            //   link: '/manage/link'
+            // },
             {
               title: '关于我',
               icon: 'mdi-information',
